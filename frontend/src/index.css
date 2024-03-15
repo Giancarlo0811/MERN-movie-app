@@ -1,0 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background-color: #020617;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+ max-width: 1100px;
+  margin: 0 auto;
+}
+
+img {
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/*nav*/
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem;
+}
+
+.nav-logo {
+  font-size: 3rem;
+  color: #fff;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-size: 1.5rem;
+  gap: 1.5rem;
+}
+
+.nav-menu li a {
+  color: #94a3b8;
+}
+
+.nav-menu li a:hover {
+  color: #fff;
+}
+
+.nav-toggle-btn {
+  background: none;
+  color: #fff;
+  font-size: 2rem;
+  display: none;
+}
+
+/*footer*/
+footer {
+  width: 100%;
+  margin-top: 2rem;
+  background-color: #0f172a;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+.footer-copyright {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-copyright p {
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.footer-copyright a {
+  font-size: 2rem;
+  color: #fff;
+}
+
+/*loader*/
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  place-items: center;
+  background: var(--color-bg);
+}
+
+.loader-image {
+  width: 8rem;
+  aspect-ratio: 1/1;
+}
+
+/*home page*/
+.home-container {
+  min-height: 100vh;
+  margin-bottom: 10rem;
+}
+
+.movies-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.movie-card {
+  width: 20rem;
+  height: 30rem;
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+}
+
+.show-more-btn {
+  margin: 4rem;
+  cursor: pointer;
+  background-color: #0f172a;
+  padding: 1rem 1.5rem;
+  color: #fff;
+  border-radius: 5px;
+}
+
+/*movie details*/
+.movie-details {
+  padding: 0 2rem 2rem 2rem;
+  margin-bottom: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.movie-title {
+  font-size: 4rem;
+  color: #fff;
+}
+
+.movie-details-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.movie-image {
+  width: 30vw;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.details {
+  width: 70vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.overview {
+  font-size: 1.8rem;
+  color: #fff;
+}
+
+.genres-container {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.genres-container h2 {
+  font-size: 2rem;
+  color: #fff;
+}
+
+.genre {
+  background-color: #0f172a;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.genre p {
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.release-date {
+  color: #fff;
+  font-size: 2rem;
+}
+
+@media screen and (max-width: 800px) {
+  html {
+    font-size: 52%;
+  }
+
+  .nav-container {
+    position: relative;
+  }
+
+  .nav-menu {
+      position: absolute;
+      top: 6rem;
+      right: 0;
+      flex-direction: column;
+      gap: 0;
+  }
+
+  .nav-menu li {
+      width: 100%;
+      background-color: #0f172a;
+      animation: dropDown 500ms ease forwards;
+      opacity: 0;
+      transform: rotateX(90);
+      transform-origin: top;
+  }
+
+  @keyframes dropDown {
+      to {
+          opacity: 1;
+          transform: rotate(0);
+      }
+  }
+
+  .nav-menu li:nth-child(1) {
+      animation-delay: 200ms;
+  }
+
+  .nav-menu li:nth-child(2) {
+      animation-delay: 400ms;
+  }
+
+  .nav-menu li:nth-child(3) {
+      animation-delay: 600ms;
+  }
+
+  .nav-menu li a, .username {
+      display: block;
+      background: var(--color-white);
+      padding: 1rem 2.5rem;
+  }
+
+  .nav-toggle-btn {
+      display: inline-block;
+      background: transparent;
+      font-size: 2rem;
+      cursor: pointer;
+  }
+
+  .movie-details-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .movie-image {
+    width: 40vw;
+  }
+
+  .details {
+    width: 70vw;
+  }
+
+  .genres-container {
+    justify-content: center;
+  }
+}
