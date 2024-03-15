@@ -1,10 +1,15 @@
 import {Link, useParams} from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import Loader from '../components/Loader';
+import Loader from '../components/Loader'
+import AddFavorite from '../components/AddFavorite'
+import ShowActors from '../components/ShowActors'
+import Actor from '../components/Actor'
 
 function MovieDetails() {
   const {id} = useParams();
   const [movie, setMovie] = useState(null);
+  const [actors, setActors] = useState([]);
+  const [showActors, setShowActors] = useState(false);
   const [isLoading, setIsloading] = useState(true);
 
   useEffect(() => {
@@ -16,13 +21,22 @@ function MovieDetails() {
     })
   },[]);
 
+  const getActors = () => {
+    fetch(`https://api.themoviedb.org/3/movie/${id}/credits?language=es-ES&api_key=${process.env.API_KEY}`)
+    .then(response => response.json())
+    .then(data => {
+      setActors(data.cast);
+      setShowActors(true);
+    })
+  }
+
+  console.log(actors)
+
   if (isLoading) {
     return (
       <Loader />
     )
   }
-
-  console.log(movie);
 
   return (
     <div className='container movie-details'>
@@ -42,8 +56,19 @@ function MovieDetails() {
               ))}
             </div>
             <h2 className='release-date'>Estreno: {movie.release_date}</h2>
+            <AddFavorite />
           </div>
-      </div>
+        </div>
+        {!showActors &&
+          <ShowActors handleClick={getActors}/>
+        }
+        {showActors &&
+          <div className='actors-container'>
+            {actors.map(actor => (
+              <Actor key={actor.id} character={actor.character} name={actor.name} profile={actor.profile_path}/>
+            ))}
+          </div>
+        }
     </div>
   )
 }
