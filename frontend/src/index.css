@@ -127,12 +127,34 @@ footer {
   margin-bottom: 10rem;
 }
 
+.search-bar {
+  margin: 2rem;
+  padding: 1rem 1.5rem;
+  border-radius: 5px;
+  width: 50%;
+  font-size: 1.5rem;
+}
+
+.search-btn {
+  padding: 1rem 1.5rem;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
 .movies-container {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   gap: 2rem;
+}
+
+.movies-container h1 {
+  text-align: center;
+  color: #fff;
+  font-size: 1.5rem;
 }
 
 .movie-card {
