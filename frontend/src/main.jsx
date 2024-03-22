@@ -10,12 +10,13 @@ import Favorites from './pages/Favorites.jsx'
 import Login from './pages/Login.jsx'
 import Register from './pages/Register.jsx'
 import Logout from './pages/Logout.jsx'
+import UserProvider from './context/userContext.jsx'
 import './index.css'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: <UserProvider><App /></UserProvider>,
     errorElement: <ErrorPage />,
     children: [
       {index: true, element: <Home />},

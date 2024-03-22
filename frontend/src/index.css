@@ -246,18 +246,21 @@ footer {
   font-size: 2rem;
 }
 
-.favorite-btn {
+.favorite-btn, .movie-already-favorite {
   width: 100%;
   padding: 1rem 1.5rem;
   background-color: #0f172a;
   color: #fff;
   font-size: 1.5rem;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1.5rem;
   border: 2px solid #0f172a;
+}
+
+.favorite-btn {
+  cursor: pointer;
 }
 
 .fav-icon {
@@ -379,6 +382,33 @@ footer {
 
 .register p a, .login p a {
   color: #94a3b8;
+}
+
+/*error page*/
+.error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.error-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.error-page h2 {
+  font-size: 2rem;
+}
+
+.error-btn {
+  color: #fff;
+  font-size: 2rem;
+  background-color: #0f172a;
+  padding: 1rem 1.5rem;
+  border-radius: 5px;
 }
 
 @media screen and (max-width: 800px) {

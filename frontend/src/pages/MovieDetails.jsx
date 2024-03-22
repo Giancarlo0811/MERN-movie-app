@@ -1,9 +1,11 @@
 import {Link, useParams} from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import axios from 'axios'
 import Loader from '../components/Loader'
 import AddFavorite from '../components/AddFavorite'
 import ShowActors from '../components/ShowActors'
 import Actor from '../components/Actor'
+import { UserContext } from '../context/userContext'
 
 function MovieDetails() {
   const {id} = useParams();
@@ -11,6 +13,10 @@ function MovieDetails() {
   const [actors, setActors] = useState([]);
   const [showActors, setShowActors] = useState(false);
   const [isLoading, setIsloading] = useState(true);
+
+  const {currentUser} = useContext(UserContext);
+  const [movieAlreadyFavorite, setMovieAlreadyFavorite] = useState(null);
+  const token = currentUser?.token;
 
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/movie/${id}?language=es-ES&api_key=${process.env.API_KEY}`)
@@ -30,7 +36,26 @@ function MovieDetails() {
     })
   }
 
-  console.log(actors)
+  const findMovie = async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/movies/get-one-favorite/${id}`,
+      { withCredentials: true, 
+        headers: {Authorization: `Bearer ${token}`}
+      });
+      const favoriteMovie = await response.data;
+      if (favoriteMovie) {
+        setMovieAlreadyFavorite(true);
+      } else {
+        setMovieAlreadyFavorite(false);
+      }
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  }
+
+  useEffect(() => {
+    findMovie();
+  },[]);
 
   if (isLoading) {
     return (
@@ -56,7 +81,16 @@ function MovieDetails() {
               ))}
             </div>
             <h2 className='release-date'>Estreno: {movie.release_date}</h2>
-            <AddFavorite />
+            {currentUser?.id && movieAlreadyFavorite &&
+              <AddFavorite movieId={id} movieTitle={movie.original_title} moviePoster={movie.poster_path}
+                movieAlreadyFavorite={movieAlreadyFavorite}
+              />
+            }
+            {currentUser?.id && !movieAlreadyFavorite &&
+              <AddFavorite movieId={id} movieTitle={movie.original_title} moviePoster={movie.poster_path}
+                movieAlreadyFavorite={movieAlreadyFavorite}
+              />
+            }
           </div>
         </div>
         {!showActors &&

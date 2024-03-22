@@ -1,6 +1,7 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
-
+import { useState, useContext } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import axios from 'axios'
+import { UserContext } from "../context/userContext";
 
 function Login() {
   const [userData, setUserData] = useState({
@@ -8,6 +9,9 @@ function Login() {
     password: '',
   });
   const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const {setCurrentUser} = useContext(UserContext);
 
   const inputHandler = (e) => {
     setUserData(prevState => {
@@ -15,10 +19,23 @@ function Login() {
     })
   }
 
+  const loginUser = async (e) => {
+    e.preventDefault();
+    setError('');
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/users/login`, userData);
+      const user = await response.data;
+      setCurrentUser(user);
+      navigate('/');
+    } catch (err) {
+      setError(err.response.data.message);
+    }
+  }
+
   return (
     <div className="container login">
       <h2>Iniciar Sesión</h2>
-      <form action="" className="form login-form">
+      <form action="" className="form login-form" onSubmit={loginUser}>
             {error && <p className="form-error-message">{error}</p>}
             <input 
               type="email" 

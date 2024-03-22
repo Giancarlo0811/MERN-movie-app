@@ -1,5 +1,6 @@
 import { useState } from "react"
 import {Link, useNavigate} from "react-router-dom"
+import axios from 'axios'
 
 function Register() {
   const [userData, setUserData] = useState({
@@ -10,6 +11,7 @@ function Register() {
   });
 
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const inputHandler = (e) => {
     setUserData(prevState => {
@@ -17,10 +19,26 @@ function Register() {
     })
   }
 
+  const registerUser = async (e) => {
+    e.preventDefault();
+    setError('');
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/users/register`, userData);
+      const newUser = await response.data;
+      console.log(newUser);
+      if(!newUser) {
+        setError('El usuario no pudo ser registrado. Por favor, intenta de nuevo');
+      }
+      navigate('/login');
+    } catch (err) {
+      setError(err.response.data.message);
+    }
+  }
+
   return (
     <div className="container register">
       <h2>Registrarse</h2>
-        <form action="" className="form register-form">
+        <form action="" className="form register-form" onSubmit={registerUser}>
           {error && 
             <p className="form-error-message">{error}</p>
           }
