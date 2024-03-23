@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const fs = require('fs');
+const path = require('path');
 require('dotenv').config();
 
 const userRoutes = require('./routes/userRoutes');
@@ -14,6 +16,14 @@ app.use(cors({credentials: true, origin: "http://localhost:5173"}));
 
 app.use('/api/users', userRoutes);
 app.use('/api/movies', favoriteRoutes);
+
+// use frontend app
+app.use(express.static(path.join(__dirname, '/frontend/dist')));
+
+// render frontend for any path
+app.get('*', (req, res) => 
+res.sendFile(path.join(__dirname, '/frontend/dist/index.html'))
+);
 
 app.use(notFound);
 app.use(errorHandler);
