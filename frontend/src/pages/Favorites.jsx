@@ -8,7 +8,6 @@ import axios from 'axios'
 function Favorites() {
   const [favoriteMovies, setFavoriteMovies] = useState([]);
   const [isLoading, setIsloading] = useState(false);
-  const [error, setError] = useState('');
 
   const {currentUser} = useContext(UserContext);
   const token = currentUser?.token;
@@ -22,7 +21,6 @@ function Favorites() {
   }, []);
 
   const getFavoriteMovies = async () => {
-    setError('');
     setIsloading(true);
     try {
       const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/movies/get-favorites/${currentUser?.id}`,
@@ -40,8 +38,6 @@ function Favorites() {
     getFavoriteMovies();
   }, []);
 
-  console.log(favoriteMovies)
-
   if (isLoading) {
     return (
       <Loader />
@@ -50,9 +46,12 @@ function Favorites() {
 
   return (
     <div className="container favorite-movies">
-      {favoriteMovies.map(movie => (
-        <FavoriteMovie key={movie.movieId} movieId={movie.movieId} title={movie.movieTitle} poster={movie.moviePoster}/>
-      ))}
+      {favoriteMovies.length > 0 ? 
+        favoriteMovies.map(movie => (
+          <FavoriteMovie key={movie.movieId} movieId={movie.movieId} title={movie.movieTitle} poster={movie.moviePoster}/>
+        )) : 
+        <h2 style={{textAlign: 'center'}}>No tienes películas favoritas</h2>
+      }
     </div>
   )
 }

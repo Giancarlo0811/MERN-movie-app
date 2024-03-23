@@ -82,14 +82,10 @@ function MovieDetails() {
             </div>
             <h2 className='release-date'>Estreno: {movie.release_date}</h2>
             {currentUser?.id && movieAlreadyFavorite &&
-              <AddFavorite movieId={id} movieTitle={movie.original_title} moviePoster={movie.poster_path}
-                movieAlreadyFavorite={movieAlreadyFavorite}
-              />
+              <h1 className="movie-already-favorite">Película Agregada a Favoritos</h1>
             }
             {currentUser?.id && !movieAlreadyFavorite &&
-              <AddFavorite movieId={id} movieTitle={movie.original_title} moviePoster={movie.poster_path}
-                movieAlreadyFavorite={movieAlreadyFavorite}
-              />
+              <AddFavorite movieId={id} movieTitle={movie.original_title} moviePoster={movie.poster_path}/>
             }
           </div>
         </div>

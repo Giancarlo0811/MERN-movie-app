@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios'
 import { UserContext } from "../context/userContext";
 
-function AddFavorite({movieId, movieTitle, moviePoster, movieAlreadyFavorite}) {
+function AddFavorite({movieId, movieTitle, moviePoster}) {
 
   const {currentUser} = useContext(UserContext);
   const token = currentUser?.token;
@@ -20,8 +20,8 @@ function AddFavorite({movieId, movieTitle, moviePoster, movieAlreadyFavorite}) {
 
   const [error, setError] = useState('');
 
-  const addToFavorite = async (e) => {
-    e.preventDefault();
+  const addToFavorite = async () => {
+    //e.preventDefault();
     setError('');
     try {
       const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/movies/add-favorite`,
@@ -38,20 +38,7 @@ function AddFavorite({movieId, movieTitle, moviePoster, movieAlreadyFavorite}) {
   }
 
   return (
-    <>
-      {movieAlreadyFavorite && 
-       <h1 className="movie-already-favorite">Película Agregada a Favoritos</h1>
-      }
-      {!movieAlreadyFavorite && 
-        <form action="" onSubmit={addToFavorite}>
-          <input type="text" name="movieId" value={movieData.movieId} style={{display: "none"}}/>
-          <input type="text" name="movieTitle" value={movieData.movieTitle}  style={{display: "none"}}/>
-          <input type="text" name="moviePoster" value={movieData.moviePoster}  style={{display: "none"}}/>
-          <button type="submit" className="favorite-btn">Agregar a Favoritos</button>
-        </form>
-      }
-      {error && <p className="form-error-message">{error}</p>}
-    </>
+  <button className="favorite-btn" onClick={addToFavorite}>Agregar a Favoritos</button>
   )
 }
 
